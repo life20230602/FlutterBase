@@ -1,18 +1,10 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter_app/base/logic/app_exception_extension.dart';
-import 'package:flutter_app/http/rest_api.dart';
-import 'package:flutter_app/base/logic/app_base_controller.dart';
 import 'package:flutter_app/base/logic/app_base_refresh_controller.dart';
-import 'package:flutter_app/page/launcher/launcher_view.dart';
-import 'package:flutter_app/page/splash/domain_selection_mixin.dart';
-import 'package:flutter_app/utils/device_info_utils.dart';
+import 'package:flutter_app/base/logic/app_exception_extension.dart';
 import 'package:flutter_app/utils/user_manager_utils.dart';
 import 'package:get/get.dart';
 
-import '../../http/rest_api_manager.dart';
 import '../../bean/video_list_item_bean.dart';
+import '../../http/rest_api_manager.dart';
 
 class VideoListLogic extends AppBaseRefreshController {
   final videoListObs = <ListElement>[].obs;
