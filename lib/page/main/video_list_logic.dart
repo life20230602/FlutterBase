@@ -29,11 +29,7 @@ class VideoListLogic extends AppBaseRefreshController {
         videoListObs.value = value.list;
       }
       showSuccess();
-      if (isLoadMore) {
-        setLoadMoreSuccess(value.list.isEmpty);
-      } else {
-        setRefreshSuccess();
-      }
+      complete(value.list.isEmpty);
     }).catchException(this,showErrorPage: firstLoad);
   }
 }

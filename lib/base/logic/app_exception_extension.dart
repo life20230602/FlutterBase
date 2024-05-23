@@ -28,8 +28,7 @@ extension FutureExt<T> on Future<T> {
         controller.showError();
       }
       if(controller is AppBaseRefreshController){
-        controller.setRefreshSuccess();
-        controller.setLoadMoreSuccess(false);
+        controller.complete(false);
       }
       return Future.error(error ?? "");
     }).catchError(_catchError);
@@ -40,8 +39,7 @@ extension FutureExt<T> on Future<T> {
       controller.showError();
     }
     if(controller is AppBaseRefreshController){
-      controller.setRefreshSuccess();
-      controller.setLoadMoreSuccess(false);
+      controller.complete(false);
     }
   }
 }
