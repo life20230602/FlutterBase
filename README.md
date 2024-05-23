@@ -96,13 +96,39 @@ class SplashLogic extends AppBaseController with DomainSelectionMixin {
       "devid": deviceId,
       "invite": "",
       "user_invite": "",
-    };
+      };
     ApiManager.getClient().login(body, cancelToken).then((value){
       UserManager.get().login(value);
       Get.to(LauncherPage());
     });
   }
 }
+```
+
+#### 怎么实现网络请求
+
+框架已经统一实现了接口的加解密，开发无需关注加解密
+
+1. 在 rest_api.dart文件中声明一个接口
+
+```dart
+@POST('/api/v1/member/guest/login')
+  Future<UserInfoBean> login(@Body() Map<String,dynamic> body, @CancelRequest() CancelToken cancelToken);
+```
+
+2. 声明完成之后在当前项目的根目录执行如下命令生成对应的实现
+
+```
+dart pub run build_runner build
+```
+
+3. 在controller 中通过ApiManager 调用此接口获取数据
+
+```dart
+ApiManager.getClient().login(body, cancelToken)
+        .then((value){
+      //value 就是你需要的数据
+    }).catchException(this);//统一的异常处理
 ```
 
 #### 开发一个列表页
@@ -148,10 +174,10 @@ class VideoListLogic extends AppBaseRefreshController {
       }
       showSuccess();
       if (isLoadMore) {
-        //设置加载更多成功,必须调用
+	//设置加载更多成功,必须调用
         setLoadMoreSuccess(value.list.isEmpty);
       } else {
-        //设置刷新成功，必须调用
+	//设置刷新成功，必须调用
         setRefreshSuccess();
       }
     }).catchException(this,showErrorPage: firstLoad);//统一异常处理
@@ -164,12 +190,29 @@ class VideoListLogic extends AppBaseRefreshController {
 1. 使用Get.to(NewPage()); 方法直接打开，建议固定页面可使用，不需要路由管理的
 2. 使用Get.toNamed("/main"); 通过路由名称打开，需要在RouteUtils 中声明，这种方式可以通过后台配置的方式动态跳转
 
-#### 在http目录中增加一个服务器接口调用
+#### 怎么加载图片
 
-1. 在 rest_api.dart文件中声明一个接口，参考原有实现。
-2. 声明完成之后在当前项目的根目录执行如下命令生成对应的实现
+1. 本地图片
 
-```
-dart pub run build_runner build
-```
+   ```dart
+   //第一种方式
+   ImageUtils.loadAssetImage("assets/images/start_up.webp");
+   //第二种方式
+   Assets.imagesIconPlaceholder.toAssetImageWidget();
+   ```
+2. 普通网络图片
 
+   ```
+   //第一种方式
+   ImageUtils.loadNetworkImage(url)
+   //第二种方式
+   url.toNetworkImageWidget();
+   ```
+3. 加密的网络图片
+
+   ```
+   //第一种方式
+   ImageUtils.loadEncryptImage(url)
+   //第二种方式
+   url.toEncryptNetworkImageWidget();
+   ```

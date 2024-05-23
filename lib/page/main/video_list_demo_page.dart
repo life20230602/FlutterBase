@@ -64,7 +64,7 @@ class VideoListPage extends AppBaseRefreshPage<VideoListLogic> with AppDialogMix
       aspectRatio: 16 / 9,
       child: Stack(
         children: [
-          item.horizontalCover.toDecryptNetworkImageWidget(radius: 5),
+          item.horizontalCover.toEncryptNetworkImageWidget(radius: 5),
           Positioned(
             left: 20,
             bottom: 10,

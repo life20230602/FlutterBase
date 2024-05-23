@@ -46,6 +46,17 @@ class ImageUtils {
       ),
     );
   }
+
+  ///加载加密的图片
+  static Widget loadEncryptImage(String url,{BoxFit? fit,double radius = 0,}){
+    if(radius > 0){
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(radius),
+        child: CustomDecryptImage(url,fit: fit),
+      );
+    }
+    return CustomDecryptImage(url,fit: fit,);
+  }
 }
 
 extension ImageLoadExt on String {
@@ -56,7 +67,7 @@ extension ImageLoadExt on String {
   }
 
   ///图片地址快速加载加密的网络图片
-  Widget toDecryptNetworkImageWidget({BoxFit? fit,double radius = 0,}){
+  Widget toEncryptNetworkImageWidget({BoxFit? fit,double radius = 0,}){
     if(radius > 0){
       return ClipRRect(
           borderRadius: BorderRadius.circular(radius),
