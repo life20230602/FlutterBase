@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/base/page/app_base_refresh_page.dart';
 import 'package:flutter_app/bean/video_list_item_bean.dart';
-import 'package:flutter_app/page/main/video_list_logic.dart';
+import 'package:flutter_app/page/demo/video_list_logic.dart';
 import 'package:flutter_app/utils/image_utils.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
