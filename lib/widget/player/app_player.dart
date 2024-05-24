@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/chewie/chewie.dart';
+import 'package:flutter_app/widget/player/video_controls.dart';
 import 'package:video_player/video_player.dart';
+
+///播放完成回调
+typedef OnPlayCompleted = void Function();
 
 /// 播放器封装
 class AppPlayer extends StatefulWidget {
-  const AppPlayer({
+  const AppPlayer(this.videoTitle,{
     this.url = "",
-    this.cover = "",
-    this.title = "",
     this.autoPlay = true,
+    this.onPlayCompleted,
     super.key,
   });
 
   final String url;
-  final String cover;
-  final String title;
+  final String videoTitle;
   final bool autoPlay;
+  final OnPlayCompleted? onPlayCompleted;
 
   @override
   State<StatefulWidget> createState() {
@@ -28,17 +31,16 @@ class _AppPlayerState extends State<AppPlayer> {
   VideoPlayerController? _controller;
   ChewieController? _cheWieController;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.url));
-  }
-
-  /// 全屏监听
+  /// 播放完成监听
   void _listener() {
-    Future.delayed(const Duration(milliseconds: 500), () {
-      _cheWieController?.play();
-    });
+    var curPosition = _controller!.value.position.inMilliseconds;
+    var totalPosition = _controller!.value.duration.inMilliseconds;
+    if (curPosition >= totalPosition && widget.onPlayCompleted != null) {
+      if (totalPosition == 0) {
+        return;
+      }
+      widget.onPlayCompleted!();
+    }
   }
 
   @override
@@ -51,17 +53,51 @@ class _AppPlayerState extends State<AppPlayer> {
     super.dispose();
   }
 
-  Future<bool> started() async {
+  /// 播放错误
+  Widget _buildError(BuildContext context, String errorMessage) {
+    var child = Center(
+      child: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(),
+          ),
+          CenterPlayButton(
+            isFinished: true,
+            backgroundColor: Colors.black54,
+            iconColor: Colors.white,
+            show: true,
+            isPlaying: false,
+            onPressed: _started,
+          ),
+          const Text("播放失败，点击重试"),
+          Expanded(
+            flex: 1,
+            child: Container(),
+          ),
+        ],
+      ),
+    );
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque, // 拦截所有事件
+      onTap: _started,
+      child: child,
+    );
+  }
+
+  Future<bool> _started() async {
+    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.url));
     await _controller?.initialize();
     if (_controller != null) {
       _cheWieController = ChewieController(
         videoPlayerController: _controller!,
+        errorBuilder: _buildError,
         // 播放速度
         materialProgressColors: ChewieProgressColors(
             // 进度条
             playedColor: Colors.orange.shade100,
             bufferedColor: Colors.grey.shade200),
-        customControls: const MaterialDesktopControls(),
+        customControls: AppVideoControls(widget.videoTitle),
         autoPlay: widget.autoPlay,
         autoInitialize: true,
       );
@@ -72,22 +108,20 @@ class _AppPlayerState extends State<AppPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder<bool>(
-        future: started(),
-        builder: (context, snapshot) {
-          if ((snapshot.data ?? false) && _cheWieController != null) {
-            return Chewie(
-              controller: _cheWieController!,
-            );
-          } else {
-            // 加载中
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
+    return FutureBuilder<bool>(
+      future: _started(),
+      builder: (context, snapshot) {
+        if ((snapshot.data ?? false) && _cheWieController != null) {
+          return Chewie(
+            controller: _cheWieController!,
+          );
+        } else {
+          // 加载中
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }
