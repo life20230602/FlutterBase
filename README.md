@@ -173,6 +173,7 @@ class VideoListLogic extends AppBaseRefreshController {
       } else {
         videoListObs.value = value.list;
       }
+      //框架默认带loading，加载完成之后需要调用此方法才会显示你的UI
       showSuccess();
       //设置成功,必须调用
       complete(value.list.isEmpty);
@@ -198,7 +199,7 @@ class VideoListLogic extends AppBaseRefreshController {
    ```
 2. 普通网络图片
 
-   ```
+   ```dart
    //第一种方式
    ImageUtils.loadNetworkImage(url)
    //第二种方式
@@ -206,7 +207,7 @@ class VideoListLogic extends AppBaseRefreshController {
    ```
 3. 加密的网络图片
 
-   ```
+   ```dart
    //第一种方式
    ImageUtils.loadEncryptImage(url)
    //第二种方式
