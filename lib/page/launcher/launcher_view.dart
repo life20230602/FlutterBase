@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../../res/colors.dart';
 import '../../res/dimens.dart';
+import 'bean/navigation_item.dart';
 
 ///首页
 class LauncherPage extends AppGetXBasePage<LauncherLogic> {
@@ -15,7 +16,14 @@ class LauncherPage extends AppGetXBasePage<LauncherLogic> {
 
   @override
   Widget? buildBottomNavigationBar() {
-    return Obx(() => Theme(
+    return Obx(() => _buildNavigationBar(controller.menuListObs));
+  }
+
+  Widget _buildNavigationBar(List<NavigationItem> items){
+    if(items.isEmpty){
+      return Container();
+    }
+    return Theme(
       data: ThemeData(brightness: Brightness.dark, splashColor: Colors.transparent, highlightColor: Colors.transparent),
       child: BottomNavigationBar(
         // 导航栏
@@ -35,7 +43,7 @@ class LauncherPage extends AppGetXBasePage<LauncherLogic> {
         unselectedItemColor: ColorRes.grey,
         type: BottomNavigationBarType.fixed, // 这个要设置，不然默认颜色 出不来
       ),
-    ));
+    );
   }
 
   @override
