@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_app/base/widget/loading_layout.dart';
 import 'package:get/get.dart';
 
 /// 页面基类
-mixin BasePage on Widget{
-
+mixin BasePage on Widget {
   /// 注入控制器
   void beforeBuild(BuildContext context) {}
 
   /// 是否显示加载页面
   bool showLoadingPage() {
     return true;
+  }
+
+  ///是否需要处理上下左右的安全区域,也就是顶部和底部是否需要保留高度
+  bool enableSafeArea() {
+    return false;
   }
 
   @override
@@ -20,13 +25,13 @@ mixin BasePage on Widget{
       backgroundColor: backgroundColor(),
       appBar: buildAppBar(context),
       bottomNavigationBar: buildBottomNavigationBar(),
-      body: SafeArea(child: _buildChild(context)),
+      body: enableSafeArea() ? SafeArea(child: _buildChild(context)) : _buildChild(context),
     );
     return child;
   }
 
   ///构建底部导航
-  Widget? buildBottomNavigationBar(){
+  Widget? buildBottomNavigationBar() {
     return null;
   }
 
@@ -35,7 +40,6 @@ mixin BasePage on Widget{
 
   ///加载失败，重试
   void retry();
-
 
   /// 加载子类的页面
   Widget _buildChild(BuildContext context) {
@@ -144,7 +148,7 @@ mixin BasePage on Widget{
 
   /// 页面背景
   Color? backgroundColor() {
-    return null;
+    return Colors.transparent;
   }
 
   /// 构建子View
