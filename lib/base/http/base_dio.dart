@@ -28,10 +28,12 @@ class BaseDio {
     _defaultDio!.options = BaseOptions(receiveTimeout: const Duration(milliseconds: 25000),
         connectTimeout: const Duration(milliseconds: 5000)); // 设置超时时间等 ...
     // 忽略 https 证书校验
-    (_defaultDio!.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate = (HttpClient client) {
-      client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-      return client;
-    };
+    if(_defaultDio!.httpClientAdapter is IOHttpClientAdapter) {
+      (_defaultDio!.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate = (HttpClient client) {
+        client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+        return client;
+      };
+    }
 
     _defaultDio!.interceptors.add(RequestEncryptIntercept());
     _defaultDio!.options.responseType = ResponseType.plain;
