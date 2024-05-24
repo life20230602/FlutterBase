@@ -63,7 +63,7 @@ class SplashLogic extends AppBaseController with DomainSelectionMixin {
         .then((value){
       UserManager.get().login(value);
       //路由跳转首页
-      Get.to(LauncherPage());
+      Get.offAll(LauncherPage());
     }).catchException(this);//统一的异常处理
   }
 }

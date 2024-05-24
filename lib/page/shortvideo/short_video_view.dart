@@ -28,6 +28,7 @@ class ShortVideoPage extends AppGetXBasePage<ShortVideoLogic> {
   @override
   Widget buildChild(BuildContext context) {
     return Obx(() => PageView.builder(
+      controller: PageController(),
         itemCount: controller.videoItemList.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
@@ -43,11 +44,11 @@ class ShortVideoPage extends AppGetXBasePage<ShortVideoLogic> {
   ///构建item
   Widget _buildItem(int index) {
     final item = controller.videoItemList[index];
-    return Obx(() => AppPlayer(
+    return AppPlayer(
       item.title,
       aspectRatio: 0,
       allowFullScreen: false,
       url: ApiManager.getPlayUrl(item.id),
-    ));
+    );
   }
 }
