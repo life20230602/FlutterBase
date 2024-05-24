@@ -12,7 +12,7 @@ class RequestEncryptIntercept extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler){
     //只加密post参数
-    if(options.method.toLowerCase() == "post"){
+    if(options.method.toLowerCase() == "post" && options.data != null){
       final data = jsonEncode(options.data).encryptApiData();
       options.data = {"data":data};
     }

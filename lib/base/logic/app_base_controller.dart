@@ -1,14 +1,13 @@
-import 'package:dio/dio.dart';
+
 import 'package:get/get.dart';
 
 import '../widget/loading_layout.dart';
+import 'app_base_network_controller.dart';
 
 /// 1. 页面的状态管理
-abstract class AppBaseController extends GetxController{
+abstract class AppBaseController extends GetxController with AppBaseNetworkController{
   /// 页面加载状态 在自定义加载类中
   var loadingState = LoadingState.loading.obs;
-  /// 网络请求取消用
-  CancelToken cancelToken = CancelToken();
 
   /// 初始化
   @override
@@ -25,7 +24,7 @@ abstract class AppBaseController extends GetxController{
   /// 销毁
   @override
   void onClose() {
-    cancelToken.cancel();
+    onNetworkClose();
     super.onClose();
   }
 

@@ -14,7 +14,9 @@ class VideoListLogic extends AppBaseRefreshController {
     //{"timestamp":1716441609650,"version":"0.1.0","os":"h5","page":1,"page_size":20,"mid":161,"type":1,"uid":22118,"token":"566e6f4cd2bd2e8b42c2a8691afc313c:89c9c8e5f160958c935be6bbcc3928e9"}
     var uid = UserManager.get().getUserId();
     final body = {"page": page, "page_size": 20, "mid": 161, "type": 1, "uid": uid};
-    ApiManager.getClient().getVideoList(body, cancelToken).then((value) {
+
+    bindLoading(ApiManager.getClient().getVideoList(body, cancelToken))
+        .then((value) {
       if (isLoadMore) {
         videoListObs.addAll(value.list);
       } else {

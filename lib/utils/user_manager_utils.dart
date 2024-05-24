@@ -20,4 +20,8 @@ class UserManager{
   int getUserId(){
     return _userInfoBean!.uid;
   }
+
+  String getToken(){
+    return _userInfoBean!.token;
+  }
 }
