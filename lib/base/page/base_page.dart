@@ -4,7 +4,7 @@ import 'package:flutter_app/base/widget/loading_layout.dart';
 import 'package:get/get.dart';
 
 /// 页面基类
-mixin BasePage on Widget {
+mixin BasePage on StatelessWidget {
   /// 注入控制器
   void beforeBuild(BuildContext context) {}
 
