@@ -28,4 +28,8 @@ abstract class RestClient {
   ///获取视频列表
   @POST('/api/v2/video/module/video/list')
   Future<VideoListBean> getVideoList(@Body() Map<String,dynamic> body, @CancelRequest() CancelToken cancelToken);
+
+  ///获取短视频列表
+  @POST('/api/v2/video/short/videos')
+  Future<VideoListBean> getShortVideoList(@Body() Map<String,dynamic> body, @CancelRequest() CancelToken cancelToken);
 }

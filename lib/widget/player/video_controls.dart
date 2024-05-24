@@ -112,7 +112,7 @@ class _MaterialDesktopControlsState extends State<AppVideoControls> with SingleT
                       ),
                       child: _buildSubtitles(context, chewieController.subtitle!),
                     ),
-                  _buildBottomBar(context),
+                  SafeArea(child: _buildBottomBar(context)),
                 ],
               ),
             ],

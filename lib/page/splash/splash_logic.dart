@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/base/logic/app_exception_extension.dart';
-import 'package:flutter_app/http/rest_api.dart';
 import 'package:flutter_app/base/logic/app_base_controller.dart';
 import 'package:flutter_app/page/launcher/launcher_view.dart';
 import 'package:flutter_app/page/splash/domain_selection_mixin.dart';

@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/chewie/chewie.dart';
 import 'package:flutter_app/widget/player/video_controls.dart';
 import 'package:video_player/video_player.dart';
+import 'package:visibility_aware_state/visibility_aware_state.dart';
 
 ///播放完成回调
 typedef OnPlayCompleted = void Function();
 
 /// 播放器封装
 class AppPlayer extends StatefulWidget {
-  const AppPlayer(this.videoTitle,{
+  const AppPlayer(
+    this.videoTitle, {
     this.url = "",
     this.autoPlay = true,
+    this.aspectRatio,
+    this.allowFullScreen = true,
     this.onPlayCompleted,
     super.key,
   });
@@ -18,6 +22,8 @@ class AppPlayer extends StatefulWidget {
   final String url;
   final String videoTitle;
   final bool autoPlay;
+  final bool allowFullScreen;
+  final double? aspectRatio;
   final OnPlayCompleted? onPlayCompleted;
 
   @override
@@ -26,7 +32,7 @@ class AppPlayer extends StatefulWidget {
   }
 }
 
-class _AppPlayerState extends State<AppPlayer> {
+class _AppPlayerState extends VisibilityAwareState<AppPlayer> {
   // 视频播放控制器
   VideoPlayerController? _controller;
   ChewieController? _cheWieController;
@@ -40,6 +46,18 @@ class _AppPlayerState extends State<AppPlayer> {
         return;
       }
       widget.onPlayCompleted!();
+    }
+  }
+
+  @override
+  void onVisibilityChanged(WidgetVisibility visibility) {
+    super.onVisibilityChanged(visibility);
+    if (visibility == WidgetVisibility.VISIBLE) {
+      if (widget.autoPlay) {
+        _controller?.play();
+      }
+    } else {
+      _controller?.pause();
     }
   }
 
@@ -91,6 +109,9 @@ class _AppPlayerState extends State<AppPlayer> {
     if (_controller != null) {
       _cheWieController = ChewieController(
         videoPlayerController: _controller!,
+        allowFullScreen: widget.allowFullScreen,
+        showOptions: false,
+        aspectRatio: widget.aspectRatio,
         errorBuilder: _buildError,
         // 播放速度
         materialProgressColors: ChewieProgressColors(
@@ -98,7 +119,7 @@ class _AppPlayerState extends State<AppPlayer> {
             playedColor: Colors.orange.shade100,
             bufferedColor: Colors.grey.shade200),
         customControls: AppVideoControls(widget.videoTitle),
-        autoPlay: widget.autoPlay,
+        autoPlay: widget.autoPlay && isVisible(),
         autoInitialize: true,
       );
       _cheWieController?.addListener(_listener);

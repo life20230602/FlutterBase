@@ -19,6 +19,11 @@ class LauncherPage extends AppGetXBasePage<LauncherLogic> {
     return Obx(() => _buildNavigationBar(controller.menuListObs));
   }
 
+  @override
+  bool enableTopSafeArea() {
+    return false;
+  }
+
   Widget _buildNavigationBar(List<NavigationItem> items){
     if(items.isEmpty){
       return Container();

@@ -1,11 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_app/base/http/base_http_bean.dart';
 import 'package:flutter_app/utils/decrypt_utils.dart';
 
-import '../exception/app_server_exception.dart';
 
 ///请求参数加密
 class RequestEncryptIntercept extends Interceptor {

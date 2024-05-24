@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/generated/assets.dart';
 
+import '../shortvideo/short_video_view.dart';
+
 class NavigationUtils{
 
   static String getDefaultImageByAlias(String alias){
@@ -34,7 +36,8 @@ class NavigationUtils{
   ///获取导航对应的内容
   static Widget getNavigationBody(String alias){
     switch(alias){
-
+      case "videos":
+        return const ShortVideoPage();
     }
     return Text(alias);
   }

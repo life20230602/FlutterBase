@@ -16,15 +16,23 @@ class ShortVideoPage extends AppGetXBasePage<ShortVideoLogic> {
   }
 
   @override
+  bool enableTopSafeArea() {
+    return false;
+  }
+
+  @override
   bool showTitle() {
     return false;
   }
 
   @override
   Widget buildChild(BuildContext context) {
-    return Obx(() => PageView.builder(itemCount: controller.videoItemList.length, itemBuilder: (context, index) {
-      return _buildItem(index);
-    }));
+    return Obx(() => PageView.builder(
+        itemCount: controller.videoItemList.length,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) {
+          return _buildItem(index);
+        }));
   }
 
   @override
@@ -35,6 +43,11 @@ class ShortVideoPage extends AppGetXBasePage<ShortVideoLogic> {
   ///构建item
   Widget _buildItem(int index) {
     final item = controller.videoItemList[index];
-    return AppPlayer(item.title,url: ApiManager.getPlayUrl(item.id),);
+    return Obx(() => AppPlayer(
+      item.title,
+      aspectRatio: 0,
+      allowFullScreen: false,
+      url: ApiManager.getPlayUrl(item.id),
+    ));
   }
 }

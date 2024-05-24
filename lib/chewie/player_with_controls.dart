@@ -25,7 +25,7 @@ class PlayerWithControls extends StatelessWidget {
       BuildContext context,
     ) {
       Widget child;
-      if (!kIsWeb) {
+      if (!kIsWeb && chewieController.aspectRatio != null && chewieController.aspectRatio! > 0) {
         child = AspectRatio(
           aspectRatio: chewieController.aspectRatio ??
               chewieController.videoPlayerController.value.aspectRatio,
