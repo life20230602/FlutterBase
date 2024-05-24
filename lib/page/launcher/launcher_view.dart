@@ -5,6 +5,7 @@ import 'package:flutter_app/utils/image_utils.dart';
 import 'package:get/get.dart';
 
 import '../../res/colors.dart';
+import '../../res/dimens.dart';
 
 ///首页
 class LauncherPage extends AppGetXBasePage<LauncherLogic> {
@@ -68,8 +69,8 @@ class LauncherPage extends AppGetXBasePage<LauncherLogic> {
 
   Widget _buildIcon(String image) {
     return Container(
-      width: 30,
-      height: 30,
+      width: Dimens.size30,
+      height: Dimens.size30,
       padding: const EdgeInsets.all(5),
       child: image.toAssetImageWidget(),
     );
