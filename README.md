@@ -174,13 +174,8 @@ class VideoListLogic extends AppBaseRefreshController {
         videoListObs.value = value.list;
       }
       showSuccess();
-      if (isLoadMore) {
-	//设置加载更多成功,必须调用
-        setLoadMoreSuccess(value.list.isEmpty);
-      } else {
-	//设置刷新成功，必须调用
-        setRefreshSuccess();
-      }
+      //设置成功,必须调用
+      complete(value.list.isEmpty);
     }).catchException(this,showErrorPage: firstLoad);//统一异常处理
   }
 }
