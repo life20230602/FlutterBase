@@ -189,6 +189,11 @@ class VideoListLogic extends AppBaseRefreshController {
 
 #### 怎么加载图片
 
+自动判断网络或者本地图片使用
+```dart
+    url.toImageWidget()
+```
+
 1. 本地图片
 
    ```dart
