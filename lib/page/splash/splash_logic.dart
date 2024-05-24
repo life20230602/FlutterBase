@@ -38,7 +38,7 @@ class SplashLogic extends AppBaseController with DomainSelectionMixin {
   @override
   void onSelectionSuccess(String baseUrl) {
     //初始化网络请求
-    ApiManager.setClient(RestClient(baseUrl: baseUrl));
+    ApiManager.initClient(baseUrl);
     _login();
   }
 

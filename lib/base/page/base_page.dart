@@ -13,9 +13,14 @@ mixin BasePage on StatelessWidget {
     return true;
   }
 
-  ///是否需要处理上下左右的安全区域,也就是顶部和底部是否需要保留高度
-  bool enableSafeArea() {
-    return false;
+  /// 是否需要启用顶部安全区域也就是 状态栏
+  bool enableTopSafeArea() {
+    return true;
+  }
+
+  /// 是否需要启用底部安全区域也就是 导航栏
+  bool enableBottomSafeArea() {
+    return true;
   }
 
   @override
@@ -25,7 +30,11 @@ mixin BasePage on StatelessWidget {
       backgroundColor: backgroundColor(),
       appBar: buildAppBar(context),
       bottomNavigationBar: buildBottomNavigationBar(),
-      body: enableSafeArea() ? SafeArea(child: _buildChild(context)) : _buildChild(context),
+      body: SafeArea(
+        top: enableTopSafeArea(),
+        bottom: enableBottomSafeArea(),
+        child: _buildChild(context),
+      ),
     );
     return child;
   }

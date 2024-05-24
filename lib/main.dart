@@ -11,9 +11,10 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 void main() async {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
   // 初始化
   await CacheUtils.init();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
