@@ -21,7 +21,7 @@ class LauncherPage extends AppBasePage {
   Widget? buildBottomNavigationBar() {
     return Theme(
       data: ThemeData(
-          backgroundColor: Colors.black,
+          // backgroundColor: Colors.black,
           brightness: Brightness.dark,
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent),
