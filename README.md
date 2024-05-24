@@ -4,6 +4,7 @@
 
 - base 基础类，定义了统一的加载状态
 - bean 公共的网络数据模型，如果独有的数据结构介意和功能代码放一块，好管理
+  - https://app.quicktype.io/ 可以通过此网站生成类
 - chewie 视频播放器，从github 下载，方便修改源码
 - generated 通过插件生成 的assets 资源管理类，Androidstudio FlutterAssetsGenerator vscode flutter-sync-assets-import
 - http 项目的服务器接口调用

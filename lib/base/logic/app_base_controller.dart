@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_app/base/app_dialog_mixin.dart';
 import 'package:get/get.dart';
 
 import '../widget/loading_layout.dart';
 
 /// 1. 页面的状态管理
-abstract class AppBaseController extends GetxController{
+abstract class AppBaseController extends GetxController with AppDialogMixin{
   /// 页面加载状态 在自定义加载类中
   var loadingState = LoadingState.loading.obs;
   /// 网络请求取消用
