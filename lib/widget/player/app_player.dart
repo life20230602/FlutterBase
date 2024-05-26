@@ -15,6 +15,7 @@ class AppPlayer extends StatefulWidget {
     this.autoPlay = true,
     this.visibility = false,
     this.aspectRatio,
+    this.coverWidget,
     this.allowFullScreen = true,
     this.onPlayCompleted,
     super.key,
@@ -27,6 +28,7 @@ class AppPlayer extends StatefulWidget {
   final double? aspectRatio;
   final bool visibility; //是否可见，默认内部感知状态
   final OnPlayCompleted? onPlayCompleted;
+  final Widget? coverWidget;
 
   @override
   State<StatefulWidget> createState() {
@@ -48,7 +50,10 @@ class _AppPlayerState extends State<AppPlayer> {
   void initState() {
     super.initState();
     visibility = widget.visibility;
-    _started().then((value){});
+    _started().then((value) {
+      setState(() {
+      });
+    });
   }
 
   /// 播放完成监听
@@ -60,7 +65,7 @@ class _AppPlayerState extends State<AppPlayer> {
         return;
       }
       isPlayerCompleted = true;
-      if(widget.onPlayCompleted != null) {
+      if (widget.onPlayCompleted != null) {
         widget.onPlayCompleted!();
       }
     }
@@ -94,7 +99,6 @@ class _AppPlayerState extends State<AppPlayer> {
   Future<bool> _started() async {
     _controller = VideoPlayerController.networkUrl(Uri.parse(widget.url));
     await _controller?.initialize();
-    print("============"+widget.url);
     if (_controller != null) {
       _cheWieController = ChewieController(
         videoPlayerController: _controller!,
@@ -123,20 +127,14 @@ class _AppPlayerState extends State<AppPlayer> {
         onVisibilityChanged: (VisibilityInfo info) {
           onVisibility(info.visibleFraction >= 0.56);
         },
-        child: FutureBuilder<bool>(
-          future: _started(),
-          builder: (context, snapshot) {
-            if ((snapshot.data ?? false) && _cheWieController != null) {
-              return Chewie(
+        child: Stack(
+          children: [
+            if (widget.coverWidget != null) widget.coverWidget!,
+            if(_cheWieController != null)
+              Chewie(
                 controller: _cheWieController!,
-              );
-            } else {
-              // 加载中
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          },
+              ),
+          ],
         ));
   }
 
