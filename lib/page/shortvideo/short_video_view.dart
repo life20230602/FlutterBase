@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/http/rest_api_manager.dart';
 import 'package:flutter_app/widget/player/app_player.dart';
@@ -27,13 +29,21 @@ class ShortVideoPage extends AppGetXBasePage<ShortVideoLogic> {
 
   @override
   Widget buildChild(BuildContext context) {
-    return Obx(() => PageView.builder(
-      controller: PageController(),
-        itemCount: controller.videoItemList.length,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) {
-          return _buildItem(index);
-        }));
+    return Obx(
+      () => PageView.builder(
+          controller: PageController(),
+          itemCount: controller.videoItemList.length,
+          scrollBehavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
+            },
+          ),
+          scrollDirection: Axis.vertical,
+          itemBuilder: (context, index) {
+            return _buildItem(index);
+          }),
+    );
   }
 
   @override
@@ -44,6 +54,7 @@ class ShortVideoPage extends AppGetXBasePage<ShortVideoLogic> {
   ///构建item
   Widget _buildItem(int index) {
     final item = controller.videoItemList[index];
+    print(ApiManager.getPlayUrl(item.id));
     return AppPlayer(
       item.title,
       aspectRatio: 0,

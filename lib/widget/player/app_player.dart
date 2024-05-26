@@ -48,6 +48,7 @@ class _AppPlayerState extends State<AppPlayer> {
   void initState() {
     super.initState();
     visibility = widget.visibility;
+    _started().then((value){});
   }
 
   /// 播放完成监听
@@ -93,6 +94,7 @@ class _AppPlayerState extends State<AppPlayer> {
   Future<bool> _started() async {
     _controller = VideoPlayerController.networkUrl(Uri.parse(widget.url));
     await _controller?.initialize();
+    print("============"+widget.url);
     if (_controller != null) {
       _cheWieController = ChewieController(
         videoPlayerController: _controller!,
@@ -111,7 +113,7 @@ class _AppPlayerState extends State<AppPlayer> {
       );
       _controller?.addListener(_listener);
     }
-    return true;
+    return Future.value(true);
   }
 
   @override

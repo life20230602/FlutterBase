@@ -22,6 +22,6 @@ class UserManager{
   }
 
   String getToken(){
-    return _userInfoBean!.token;
+    return _userInfoBean != null ? _userInfoBean!.token : "";
   }
 }

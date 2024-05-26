@@ -10,7 +10,7 @@ class ShortVideoLogic extends AppBaseController  {
 
   @override
   void onLoad() {
-    final body = {"uid": UserManager.get().getUserId(), "os": "h5", "token": UserManager.get().getToken()};
+    final body = {"uid": UserManager.get().getUserId(), "token": UserManager.get().getToken()};
     ApiManager.getClient().getShortVideoList(body, cancelToken).then((value) {
       videoItemList.value = value.list;
     });

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/utils/device_info_utils.dart';
+import 'package:flutter_app/utils/user_manager_utils.dart';
 
 ///请求头添加
 class HeaderInterceptor extends Interceptor {
@@ -13,6 +14,9 @@ class HeaderInterceptor extends Interceptor {
     final appVersion = await DeviceInfo.getAppVersion();
     headers['devid'] = deviceId;
     headers['version'] = appVersion;
+    var token = UserManager.get().getToken();
+
+    headers['Api-Token'] = token;
     if (kIsWeb) {
       headers['os'] = 'h5'; //系统名称
     } else {

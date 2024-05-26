@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/route/route_utils.dart';
+import 'package:flutter_app/route/router_observer.dart';
 import 'package:flutter_app/utils/cache_utils.dart';
 import 'package:flutter_app/utils/refresh_utils.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: "/",
       getPages: RouteUtils.pages,
+      navigatorObservers: [RouterNavigatorObserver()],
       builder: FlutterSmartDialog.init(),
     );
   }

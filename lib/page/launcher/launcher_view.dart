@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/base/page/app_getx_base_page.dart';
+import 'package:flutter_app/page/demo/video_list_demo_page.dart';
 import 'package:flutter_app/page/launcher/launcher_logic.dart';
 import 'package:flutter_app/utils/image_utils.dart';
 import 'package:get/get.dart';
@@ -37,6 +38,10 @@ class LauncherPage extends AppGetXBasePage<LauncherLogic> {
         currentIndex: _currentIndex.value,
         // 选中的位置
         onTap: (index) {
+          if(index == 2){
+            Get.to(const VideoListPage());
+            return;
+          }
           if(controller.menuListObs[index].canJump()) {
             // 点击事件
             _currentIndex.value = index;

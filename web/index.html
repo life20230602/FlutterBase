@@ -38,6 +38,7 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hls.js/1.4.12/hls.js"  type="application/javascript"></script>
 </head>
 <body>
   <div id="app-loading">
@@ -48,6 +49,9 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
+    }
+    video{
+      object-fit:fill;
     }
   </style>
   <script>
@@ -60,6 +64,10 @@
         onEntrypointLoaded: function(engineInitializer) {
           engineInitializer.initializeEngine().then(function(appRunner) {
             appRunner.runApp();
+          }).then(function(app){
+            window.setTimeout(function(){
+              document.getElementById("app-loading").style.display = "none";
+            },200);
           });
         }
       });
